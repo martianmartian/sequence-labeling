@@ -1,4 +1,7 @@
 # Sequential Labeling
+Updated to py3.6, tf 1.0
+
+# Sequential Labeling
 
 - HMM
 - BILSTM-CRF
@@ -52,8 +55,8 @@ python test.py model test.in test.out -c char_emb -g 2
 The first line of the embedding file is the number of char and embedding dimension, seperating by space, e.g 5 10. The remaining line is the char and embedding vector, seperating by space, e.g N dim1 ... dim 10
 
 # Installation Dependencies
-- python 2.7
-- tensorflow 0.8
+- python 3.6
+- tensorflow 1.0
 - numpy
 - pandas
 
