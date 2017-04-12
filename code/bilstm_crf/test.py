@@ -25,7 +25,7 @@ num_steps = 200 # it must consist with the train
 
 start_time = time.time()
 
-print "preparing test data"
+print( "preparing test data")
 X_test, X_test_str = helper.getTest(test_path=test_path, seq_max_len=num_steps)
 char2id, id2char = helper.loadMap("char2id")
 label2id, id2label = helper.loadMap("label2id")
@@ -36,7 +36,7 @@ if emb_path != None:
 else:
 	embedding_matrix = None
 
-print "building model"
+print( "building model")
 config = tf.ConfigProto(allow_soft_placement=True)
 with tf.Session(config=config) as sess:
 	with tf.device(gpu_config):
@@ -44,12 +44,12 @@ with tf.Session(config=config) as sess:
 		with tf.variable_scope("model", reuse=None, initializer=initializer):
 			model = BILSTM_CRF(num_chars=num_chars, num_classes=num_classes, num_steps=num_steps, embedding_matrix=embedding_matrix, is_training=False)
 
-		print "loading model parameter"
+		print( "loading model parameter")
 		saver = tf.train.Saver()
 		saver.restore(sess, model_path)
 
-		print "testing"
+		print( "testing")
 		model.test(sess, X_test, X_test_str, output_path)
 
 		end_time = time.time()
-		print "time used %f(hour)" % ((end_time - start_time) / 3600)
+		print( "time used %f(hour)" % ((end_time - start_time) / 3600))

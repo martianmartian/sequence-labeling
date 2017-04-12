@@ -103,12 +103,12 @@ def extractEntity(sentence, labels):
 
 def loadMap(token2id_filepath):
 	if not os.path.isfile(token2id_filepath):
-		print "file not exist, building map"
+		print( "file not exist, building map")
 		buildMap()
 
 	token2id = {}
 	id2token = {}
-	with open(token2id_filepath) as infile:
+	with open(token2id_filepath,'rb') as infile:
 		for row in infile:
 			row = row.rstrip().decode("utf-8")
 			token = row.split('\t')[0]
@@ -118,13 +118,13 @@ def loadMap(token2id_filepath):
 	return token2id, id2token
 
 def saveMap(id2char, id2label):
-	with open("char2id", "wb") as outfile:
+	with open("char2id", "w") as outfile:
 		for idx in id2char:
 			outfile.write(id2char[idx] + "\t" + str(idx)  + "\r\n")
-	with open("label2id", "wb") as outfile:
+	with open("label2id", "w") as outfile:
 		for idx in id2label:
 			outfile.write(id2label[idx] + "\t" + str(idx) + "\r\n")
-	print "saved map between token and id"
+	print( "saved map between token and id")
 
 def buildMap(train_path="train.in"):
 	df_train = pd.read_csv(train_path, delimiter='\t', quoting=csv.QUOTE_NONE, skip_blank_lines=False, header=None, names=["char", "label"])
@@ -174,7 +174,7 @@ def getTrain(train_path, val_path, train_val_ratio=0.99, use_custom_val=False, s
 		X_val = X[int(num_samples * train_val_ratio):]
 		y_val = y[int(num_samples * train_val_ratio):]
 
-	print "train size: %d, validation size: %d" %(len(X_train), len(y_val))
+	print( "train size: %d, validation size: %d" %(len(X_train), len(y_val)))
 
 	return X_train, y_train, X_val, y_val
 
@@ -202,7 +202,7 @@ def getTest(test_path="test.in", is_validation=False, seq_max_len=200):
 		df_test["char"] = df_test.char.map(lambda x : -1 if str(x) == str(np.nan) else x)
 		X_test, _ = prepare(df_test["char_id"], df_test["char_id"], seq_max_len)
 		X_test_str, _ = prepare(df_test["char"], df_test["char_id"], seq_max_len, is_padding=False)
-		print "test size: %d" %(len(X_test))
+		print( "test size: %d" %(len(X_test)))
 		return X_test, X_test_str
 
 def getTransition(y_train_batch):
